@@ -2,10 +2,49 @@
 
 Este documento registra as decisões de design tomadas durante o desenvolvimento do desafio técnico, o raciocínio por trás delas, e o que ficou deliberadamente fora do escopo do "básico" para ser tratado como diferencial ou melhoria futura. O histórico de prompts usados com IA está em `PROMPTS.md`.
 
+## Arquitetura
+
+```mermaid
+flowchart LR
+    subgraph Balancas["Balanças"]
+        ESP32["ESP32 real<br/>(não implementado fisicamente,<br/>fora do escopo do desafio)"]
+        SIM["scale-simulator<br/>(módulo separado, virtual threads,<br/>um worker por balança)"]
+    end
+
+    subgraph API["API principal (Spring Boot)"]
+        CTRL["ScaleReadingController<br/>POST /api/scale-readings<br/>202 Accepted, fire-and-forget"]
+        ING["ReadingIngestionService"]
+        STAB["ScaleStabilizationService<br/>ConcurrentHashMap por balança<br/>janela deslizante + reset por hiato"]
+        TX["TransportTransactionService<br/>STARTED → WEIGHING → COMPLETED"]
+        CRUD["Cadastros<br/>Branch / GrainType / Truck / Scale"]
+        REP["ReportService<br/>GET /api/reports/*"]
+    end
+
+    DB[("PostgreSQL<br/>Flyway V1-V3")]
+    CLIENT["Admin / Avaliador<br/>Postman"]
+
+    ESP32 -->|"a cada 100ms<br/>{id, plate, weight}"| CTRL
+    SIM -->|"a cada 100ms<br/>{id, plate, weight}"| CTRL
+    CTRL --> ING --> STAB
+    STAB -->|"evento STARTED / STABILIZED"| TX
+    TX --> DB
+    CRUD --> DB
+    REP --> DB
+    SIM -.->|"descobre / cadastra"| CRUD
+    SIM -.->|"abre transação"| TX
+    CLIENT --> CRUD
+    CLIENT --> TX
+    CLIENT --> REP
+```
+
+- **Ingestão desacoplada da persistência**: o controller aceita a leitura e devolve `202` imediatamente; a estabilização acontece em memória (`ScaleStabilizationService`) e só toca o banco quando um evento relevante ocorre (início ou fim de pesagem) — não a cada leitura de 100ms.
+- **`scale-simulator` fala com a API como um cliente externo**: mesma porta de entrada que o ESP32 usaria (`/api/scale-readings`), mais os endpoints normais de cadastro/transação para se auto-provisionar — não há acoplamento de código entre os dois módulos.
+- Ver a seção "Ingestão via fila (Kafka/RabbitMQ)" mais abaixo para a alternativa considerada e descartada para este escopo.
+
 ## Stack
 
 - **Spring Boot 4.1.0 / Java 25 / PostgreSQL 16 + Flyway**: schema versionado via migration (`src/main/resources/db/migration`), `spring.jpa.hibernate.ddl-auto: validate` — o Hibernate nunca gera schema, só valida contra o que o Flyway aplicou.
-- **Docker Compose** só para o Postgres local (`docker-compose.yml`).
+- **Docker Compose** sobe Postgres, a API principal e (opcionalmente, via profile) o `scale-simulator` — ver `docker-compose.yml` e `INSTRUCTIONS.md`.
 
 ## Modelagem de domínio
 

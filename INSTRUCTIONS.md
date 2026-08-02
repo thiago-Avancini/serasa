@@ -112,5 +112,5 @@ Em `postman/serasa.postman_collection.json` tem uma collection pronta com os pri
 
 ## Documentação adicional
 
-- `DECISIONS.md` — decisões de arquitetura, estratégia de estabilização, melhorias futuras
+- `DECISIONS.md` — decisões de arquitetura, estratégia de estabilização, melhorias futuras. Tem um diagrama Mermaid do fluxo de arquitetura; o preview de Markdown padrão do IntelliJ não renderiza Mermaid — instale o plugin **Mermaid** (Settings → Plugins) para ver localmente, ou visualize o arquivo direto no GitHub, que renderiza nativamente.
 - `PROMPTS.md` — registro de uso de IA no desenvolvimento (item 6 do desafio)
