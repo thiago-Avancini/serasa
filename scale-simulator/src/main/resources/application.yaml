@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: scale-simulator
+  main:
+    web-application-type: none
+
+simulator:
+  target-base-url: ${TARGET_BASE_URL:http://localhost:8080}
+  reading-interval: 100ms
+  discovery-interval: 30s
+  scales:
+    - scale-code: SCALE-01
+      branch-code: BR-01
+      branch-name: "Filial Central"
+      truck-plate: ABC1D23
+      truck-tare-kg: 9000
+      grain-type-name: "Soja"
+      grain-purchase-price-per-ton: 180.00
+      grain-available-quantity-tons: 300
+    - scale-code: SCALE-02
+      branch-code: BR-01
+      branch-name: "Filial Central"
+      truck-plate: XYZ9E88
+      truck-tare-kg: 8500
+      grain-type-name: "Milho"
+      grain-purchase-price-per-ton: 95.00
+      grain-available-quantity-tons: 600
+  weight:
+    target-min-kg: 22000
+    target-max-kg: 42000
+  plateau:
+    min-seconds: 3
+    max-seconds: 10
+  idle:
+    min-seconds: 2
+    max-seconds: 15
