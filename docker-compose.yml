@@ -1,0 +1,61 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: serasa-postgres
+    environment:
+      POSTGRES_DB: serasa
+      POSTGRES_USER: serasa
+      POSTGRES_PASSWORD: serasa
+    ports:
+      - "5432:5432"
+    volumes:
+      - serasa-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U serasa -d serasa"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: serasa-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: serasa
+      DB_USER: serasa
+      DB_PASSWORD: serasa
+    ports:
+      - "8080:8080"
+    healthcheck:
+      # No curl/wget in the eclipse-temurin JRE image; bash's /dev/tcp is built in and
+      # is already available there. Just proves the app finished starting (Flyway ran,
+      # Tomcat is accepting connections) — good enough for compose-level ordering.
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/localhost/8080' 2>/dev/null || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+
+  # Optional: simulates multiple ESP32 scales sending concurrent readings against `app`.
+  # Off by default so `docker compose up` starts a clean system; opt in with:
+  #   docker compose --profile simulator up
+  scale-simulator:
+    build:
+      context: ./scale-simulator
+      dockerfile: Dockerfile
+    container_name: serasa-scale-simulator
+    profiles: ["simulator"]
+    depends_on:
+      app:
+        condition: service_healthy
+    environment:
+      TARGET_BASE_URL: http://app:8080
+
+volumes:
+  serasa-postgres-data:

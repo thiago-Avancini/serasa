@@ -1,3 +1,31 @@
 spring:
   application:
     name: serasa
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:serasa}
+    username: ${DB_USER:serasa}
+    password: ${DB_PASSWORD:serasa}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+scale:
+  stabilization:
+    window-duration: 1000ms
+    min-samples: 10
+    tolerance-kg: 20
+    empty-threshold-kg: 100
+    stale-after: 3000ms
+
+pricing:
+  margin:
+    min: 0.05
+    max: 0.20
+    reference-quantity-tons: 500

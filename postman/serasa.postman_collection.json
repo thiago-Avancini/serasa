@@ -1,0 +1,268 @@
+{
+  "info": {
+    "name": "serasa",
+    "description": null,
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "scale-readings",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{localhost}}/api/scale-readings",
+          "protocol": "",
+          "host": [
+            "{{localhost}}"
+          ],
+          "path": [
+            "api",
+            "scale-readings"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": \"BAL-001\",\n  \"plate\": \"ABC1234\",\n  \"weight\": 100\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "create-branches",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{localhost}}/api/branches",
+          "protocol": "",
+          "host": [
+            "{{localhost}}"
+          ],
+          "path": [
+            "api",
+            "branches"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"code\": \"SP01\",\n  \"name\": \"Filial São Paulo\",\n  \"city\": \"São Paulo\",\n  \"state\": \"SP\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "create-scales",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{localhost}}/api/scales",
+          "protocol": "",
+          "host": [
+            "{{localhost}}"
+          ],
+          "path": [
+            "api",
+            "scales"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"code\": \"BAL-001\",\n  \"branchId\": 1,\n  \"location\": \"Doca 1\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "create-grain-types",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{localhost}}/api/grain-types",
+          "protocol": "",
+          "host": [
+            "{{localhost}}"
+          ],
+          "path": [
+            "api",
+            "grain-types"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Soja\",\n  \"purchasePricePerTon\": 2200.00,\n  \"availableQuantityTons\": 500\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "create-trucks",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{localhost}}/api/trucks",
+          "protocol": "",
+          "host": [
+            "{{localhost}}"
+          ],
+          "path": [
+            "api",
+            "trucks"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"plate\": \"ABC1234\",\n  \"tareWeightKg\": 8000,\n  \"cargoCapacityTons\": 30\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "create-transport-transactions",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{localhost}}/api/transport-transactions",
+          "protocol": "",
+          "host": [
+            "{{localhost}}"
+          ],
+          "path": [
+            "api",
+            "transport-transactions"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"truckId\": 1,\n  \"grainTypeId\": 1,\n  \"originBranchId\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "get-transport-transactions",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{localhost}}/api/transport-transactions/{{id}}",
+          "protocol": "",
+          "host": [
+            "{{localhost}}"
+          ],
+          "path": [
+            "api",
+            "transport-transactions",
+            "{{id}}"
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "get-grain-types",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{localhost}}/api/grain-types",
+          "protocol": "",
+          "host": [
+            "{{localhost}}"
+          ],
+          "path": [
+            "api",
+            "grain-types"
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "localhost",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "id",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
