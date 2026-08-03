@@ -251,6 +251,106 @@
           "variable": []
         }
       }
+    },
+    {
+      "name": "report-grain-types",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{localhost}}/api/reports/grain-types",
+          "protocol": "",
+          "host": [
+            "{{localhost}}"
+          ],
+          "path": [
+            "api",
+            "reports",
+            "grain-types"
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "report-branches",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{localhost}}/api/reports/branches",
+          "protocol": "",
+          "host": [
+            "{{localhost}}"
+          ],
+          "path": [
+            "api",
+            "reports",
+            "branches"
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "report-scales",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{localhost}}/api/reports/scales",
+          "protocol": "",
+          "host": [
+            "{{localhost}}"
+          ],
+          "path": [
+            "api",
+            "reports",
+            "scales"
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "report-overview",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{localhost}}/api/reports/overview",
+          "protocol": "",
+          "host": [
+            "{{localhost}}"
+          ],
+          "path": [
+            "api",
+            "reports",
+            "overview"
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
     }
   ],
   "variable": [
